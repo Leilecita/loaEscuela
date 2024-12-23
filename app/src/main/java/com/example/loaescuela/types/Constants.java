@@ -30,6 +30,7 @@ public class Constants {
     public static String OUTCOME_EXTRACTION = "extraccion";
     public static String OUTCOME_SPEND = "gasto";
     public static String OUTCOME_SANTI= "santi";
+    public static String OUTCOME_DEPOSIT = "deposito";
 
 
 

@@ -5,6 +5,7 @@ import android.app.DatePickerDialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -26,6 +27,7 @@ import com.example.loaescuela.DateHelper;
 import com.example.loaescuela.R;
 import com.example.loaescuela.adapters.OutcomeAdapter;
 import com.example.loaescuela.adapters.SpinnerAdapter;
+import com.example.loaescuela.adapters.StudentAdapter;
 import com.example.loaescuela.data.SessionPrefs;
 import com.example.loaescuela.network.ApiClient;
 import com.example.loaescuela.network.Error;
@@ -33,6 +35,7 @@ import com.example.loaescuela.network.GenericCallback;
 import com.example.loaescuela.network.models.Outcome;
 import com.example.loaescuela.network.models.ReportIncomeStudent;
 import com.example.loaescuela.network.models.ReportOutcome;
+import com.example.loaescuela.network.models.Student;
 import com.example.loaescuela.types.CategoryType;
 import com.example.loaescuela.types.Constants;
 import com.example.loaescuela.types.OutcomeType;
@@ -74,6 +77,7 @@ public class OutcomesActivity extends BaseActivity implements Paginate.Callbacks
     public TextView title;
 
     public LinearLayout bottomSheet;
+    private StickyRecyclerHeadersDecoration headersDecor;
 
     @Override
     public int getLayoutRes() {
@@ -98,18 +102,16 @@ public class OutcomesActivity extends BaseActivity implements Paginate.Callbacks
         emptyRecyclerView = findViewById(R.id.empty);
 
         mRecyclerView = findViewById(R.id.list_outcomes);
-        layoutManager = new LinearLayoutManager(this);
+
+
+        layoutManager = new LinearLayoutManager(this    );
         mRecyclerView.setLayoutManager(layoutManager);
-        mAdapter = new OutcomeAdapter(this, new ArrayList<>());
+        mAdapter = new OutcomeAdapter(this, new ArrayList<ReportOutcome>());
         mRecyclerView.setAdapter(mAdapter);
-
-        final StickyRecyclerHeadersDecoration headersDecor = new StickyRecyclerHeadersDecoration(mAdapter);
-        mRecyclerView.addItemDecoration(headersDecor);
-
-        button= findViewById(R.id.add_outcome);
 
         implementsPaginate();
 
+        button= findViewById(R.id.add_outcome);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -119,7 +121,20 @@ public class OutcomesActivity extends BaseActivity implements Paginate.Callbacks
 
         bottomSheet = findViewById(R.id.bottomSheet);
 
+        headersDecor = new StickyRecyclerHeadersDecoration(mAdapter);
+        mRecyclerView.addItemDecoration(headersDecor);
+
+        mAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            @Override public void onChanged() {
+                headersDecor.invalidateHeaders();
+            }
+        });
+
+
         topBarListener(bottomSheet);
+
+
+
     }
 
     private void topBarListener(LinearLayout bottomSheet) {
@@ -145,7 +160,6 @@ public class OutcomesActivity extends BaseActivity implements Paginate.Callbacks
             @Override
             public void onClick(View view) {
                 clearFilters();
-
                 clearview();
             }
         });
@@ -217,6 +231,9 @@ public class OutcomesActivity extends BaseActivity implements Paginate.Callbacks
                 }else{
                     emptyRecyclerView.setVisibility(View.GONE);
                 }
+
+                mAdapter.notifyDataSetChanged(); // esto lo agregue porque sino el header del sticky no se me dibujaba
+
             }
 
             @Override
@@ -314,6 +331,7 @@ public class OutcomesActivity extends BaseActivity implements Paginate.Callbacks
         final EditText value=  dialogView.findViewById(R.id.amount);
         final Spinner spinnerType = dialogView.findViewById(R.id.type);
         final Spinner spinnerCategory = dialogView.findViewById(R.id.category);
+        final Spinner spinnerPlace = dialogView.findViewById(R.id.place);
 
         final TextView cancel=  dialogView.findViewById(R.id.cancel);
         final Button ok=  dialogView.findViewById(R.id.ok);
@@ -327,6 +345,11 @@ public class OutcomesActivity extends BaseActivity implements Paginate.Callbacks
         List<String> spinner_type_out = new ArrayList<>();
         enumNameToStringArray(OutcomeType.values(),spinner_type_out);
         createSpinnerCat(spinnerType,spinner_type_out);
+
+        List<String> spinner_place = new ArrayList<>();
+        spinner_place.add("escuela");
+        spinner_place.add("negocio");
+        createSpinnerCat(spinnerPlace,spinner_place);
 
         mSelectedDate = DateHelper.get().getActualDate();
         date.setText(DateHelper.get().onlyDate(DateHelper.get().getActualDateToShow()));
@@ -352,13 +375,16 @@ public class OutcomesActivity extends BaseActivity implements Paginate.Callbacks
 
                 String typeT = spinnerType.getSelectedItem().toString().trim();
                 String categoryT = spinnerCategory.getSelectedItem().toString().trim();
+                String placeT = spinnerPlace.getSelectedItem().toString().trim();
 
                 Outcome out = new Outcome();
                 out.amount = valueT;
                 out.observation = descrT;
                 out.category = categoryT;
                 out.type = typeT;
+                out.outcome_place = placeT;
                 //out.user_id = Long.valueOf( SessionPrefs.get(getBaseContext()).getId());
+                out.created = mSelectedDate;
 
                 ApiClient.get().postOutcome(out, new GenericCallback<Outcome>() {
                     @Override

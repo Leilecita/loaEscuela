@@ -52,6 +52,7 @@ public class BeachBoxAdapter extends BaseAdapter<BeachBox,BeachBoxAdapter.ViewHo
         public TextView rest_box;
         public TextView dep;
         public TextView category;
+        public TextView deposit;
         public LinearLayout line_photo;
         public LinearLayout principal_line;
         public ImageView vent;
@@ -69,6 +70,7 @@ public class BeachBoxAdapter extends BaseAdapter<BeachBox,BeachBoxAdapter.ViewHo
             line_photo = v.findViewById(R.id.line_photos);
             principal_line = v.findViewById(R.id.principal_line);
             category = v.findViewById(R.id.category);
+            deposit = v.findViewById(R.id.deposit);
         }
     }
 
@@ -97,6 +99,8 @@ public class BeachBoxAdapter extends BaseAdapter<BeachBox,BeachBoxAdapter.ViewHo
             vh.dep.setText(null);
         if (vh.category != null)
             vh.category.setText(null);
+        if (vh.deposit != null)
+            vh.deposit.setText(null);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
@@ -113,6 +117,7 @@ public class BeachBoxAdapter extends BaseAdapter<BeachBox,BeachBoxAdapter.ViewHo
         holder.rest_box.setText(ValuesHelper.get().getIntegerQuantity(currentBeachBox.rest_box));
         holder.dep.setText(ValuesHelper.get().getIntegerQuantity(currentBeachBox.deposit));
         holder.category.setText(currentBeachBox.category);
+        holder.deposit.setText(ValuesHelper.get().getIntegerQuantity(currentBeachBox.deposit));
 
         if (currentBeachBox.rest_box != currentBeachBox.total_box - currentBeachBox.deposit) {
             holder.rest_box.setTextColor(mContext.getResources().getColor(R.color.loa_red));

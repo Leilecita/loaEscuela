@@ -218,6 +218,60 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
+                    android:layout_marginTop="12dp"
+                    android:layout_height="@dimen/height_rec_cuad_input"
+                    android:background="@drawable/rec_find"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_weight="2"
+                        android:fontFamily="@font/opensansregular"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:text="Lugar "
+                        android:paddingLeft="8dp"
+                        android:textSize="@dimen/general_text"
+                        android:textColor="@color/colorPrimaryDarkLetterRose" />
+                    <TextView
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginBottom="2dp"
+                        android:layerType="software"
+                        android:layout_marginRight="4dp"
+                        android:background="@drawable/line_dotted_vertical"
+                        />
+
+
+                    <Spinner
+                        android:layout_width="match_parent"
+                        android:layout_weight="2"
+                        android:inputType="textCapWords"
+                        android:layout_height="match_parent"
+                        android:backgroundTint="@color/transparent"
+                        android:fontFamily="@font/opensanslight"
+                        android:dropDownVerticalOffset="35dp"
+                        android:textColorHint="@color/word_clear"
+                        android:background="@drawable/rec_find"
+                        android:textColor="@color/colorPrimaryLetterRose"
+                        android:textSize="@dimen/general_text"
+                        android:id="@+id/place"
+                        />
+
+                    <TextView
+                        android:layout_width="20dp"
+                        android:textSize="@dimen/big_big_text"
+                        android:text=""
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:textColor="@color/colorPrimaryClearLetter"
+                        android:fontFamily="@font/arialroundedreg"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="@dimen/height_rec_cuad_input"
                     android:layout_marginTop="12dp"
                     android:background="@drawable/rec_find"

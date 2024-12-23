@@ -49,7 +49,7 @@ public class BoxLocalFragment extends BaseFragment implements Paginate.Callbacks
     }
 
     public void onClickButton(){
-        ((IncomesActivity) requireActivity()).startCreateBoxActivity();
+        ((IncomesActivity) requireActivity()).startCreateBoxActivity("negocio");
     }
 
     public int getVisibility(){
@@ -91,7 +91,31 @@ public class BoxLocalFragment extends BaseFragment implements Paginate.Callbacks
     private void listEvents(){
 
         loadingInProgress=true;
+        ApiClient.get().getBoxes(mCurrentPage, "negocio", "Todas",new GenericCallback<List<BeachBox>>() {
+            @Override
+            public void onSuccess(List<BeachBox> data) {
 
+                System.out.println("aca estoyyy");
+                System.out.println(data.size());
+
+                if (data.size() == 0) {
+                    hasMoreItems = false;
+                }else{
+                    int prevSize = mAdapter.getItemCount();
+                    mAdapter.pushList(data);
+                    mCurrentPage++;
+                    if(prevSize == 0){
+                        layoutManager.scrollToPosition(0);
+                    }
+                }
+                loadingInProgress = false;
+            }
+
+            @Override
+            public void onError(Error error) {
+                loadingInProgress = false;
+            }
+        });
     }
 
 

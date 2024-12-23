@@ -56,10 +56,11 @@ public class IncomesActivity extends BaseActivity{
         startActivityForResult(i, ADD_STUDENT_ACTIVITY);
     }
 
-    public void startCreateBoxActivity() {
+    public void startCreateBoxActivity(String place) {
 
         Intent i = new Intent(this, CreateBoxActivity.class);
         i.putExtra("PAYMENTPLACE", this.payment_place);
+        //i.putExtra("PAYMENTPLACE", place);
         startActivityForResult(i, CREATE_BOX_ACTIVITY);
     }
 
@@ -69,18 +70,20 @@ public class IncomesActivity extends BaseActivity{
 
 
         if(requestCode == CREATE_BOX_ACTIVITY ){
+            String place = data.getStringExtra("PAYMENTPLACE");
             Fragment f;
-            if(payment_place.equals("escuela")){
-                selectFragment(1);
-                f = mAdapter.getItem(1);
+
+           // if(payment_place.equals("escuela")){
+            if(place.equals("escuela")){
+                selectFragment(2);
+                f = mAdapter.getItem(2);
                 if (f instanceof BaseFragment) {
                     ((BoxBeachFragment) f).refreshList(-1l);
                 }
 
             }else{
-                System.out.println("entra aca nego");
-                selectFragment(2);
-                f = mAdapter.getItem(2);
+                selectFragment(3);
+                f = mAdapter.getItem(3);
                 if(f instanceof BaseFragment) {
                     ((BoxLocalFragment) f).refreshList(-1l);
                 }
@@ -236,9 +239,16 @@ public class IncomesActivity extends BaseActivity{
         if (i == 0) {
             t.setText("Escuela");
             t.setTextColor(getResources().getColor(R.color.white));
-        } else{
+        } else if (i == 1){
+            t.setText("Nego");
+            t.setTextColor(getResources().getColor(R.color.coloRose_soft_2));
+        } else if( i == 2){
             t.setText("Caja playa");
             t.setTextColor(getResources().getColor(R.color.coloRose_soft_2));
+        } else{
+            t.setText("Caja nego");
+            t.setTextColor(getResources().getColor(R.color.coloRose_soft_2));
+
         }
     }
 
@@ -252,7 +262,7 @@ public class IncomesActivity extends BaseActivity{
         if (i == 0 || i == 2) {
             this.payment_place = "escuela";
         } else  {
-            this.payment_place = "escuela";
+            this.payment_place = "negocio";
         }
     }
 

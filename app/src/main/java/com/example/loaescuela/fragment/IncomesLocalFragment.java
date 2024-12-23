@@ -119,6 +119,9 @@ public class IncomesLocalFragment extends BaseFragment implements Paginate.Callb
             @Override
             public void onSuccess(List<ReportIncomeStudent> data) {
 
+                System.out.println("aca");
+                System.out.println(data.size());
+
                 if (data.size() == 0) {
                     hasMoreItems = false;
                 }else{

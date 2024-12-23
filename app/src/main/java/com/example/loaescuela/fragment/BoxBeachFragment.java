@@ -65,7 +65,7 @@ public class BoxBeachFragment extends BaseFragment implements Paginate.Callbacks
     }
 
     public void onClickButton(){
-        ((IncomesActivity) requireActivity()).startCreateBoxActivity();
+        ((IncomesActivity) requireActivity()).startCreateBoxActivity("escuela");
     }
 
     public int getVisibility(){

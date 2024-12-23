@@ -1,6 +1,7 @@
 package com.example.loaescuela.activities;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -13,10 +14,17 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.fragment.app.Fragment;
+
 import com.example.loaescuela.DateHelper;
 import com.example.loaescuela.R;
 import com.example.loaescuela.ValidatorHelper;
 import com.example.loaescuela.ValuesHelper;
+import com.example.loaescuela.fragment.BaseFragment;
+import com.example.loaescuela.fragment.BoxBeachFragment;
+import com.example.loaescuela.fragment.BoxLocalFragment;
+import com.example.loaescuela.fragment.IncomesBeachFragment;
+import com.example.loaescuela.fragment.IncomesLocalFragment;
 import com.example.loaescuela.network.ApiClient;
 import com.example.loaescuela.network.Error;
 import com.example.loaescuela.network.GenericCallback;
@@ -73,8 +81,10 @@ public class CreateBoxActivity extends BaseActivity {
 
     private FrameLayout porcentaje;
     private LinearLayout colonia;
+    private LinearLayout load_extraction;
     private TextView text_colonia;
     private TextView text_porcentaje;
+    private static final int CREATE_BOX_ACTIVITY_OUT = 1329;
 
     @Override
     public int getLayoutRes() {
@@ -87,12 +97,18 @@ public class CreateBoxActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
 
         mPaymentPlace = getIntent().getStringExtra("PAYMENTPLACE");
+        System.out.println("acaaaaa");
+        System.out.println(mPaymentPlace);
         mCategory = Constants.CATEGORY_ESCUELA;
 
         home = findViewById(R.id.line_home);
         home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                Intent intent = new Intent();
+                intent.putExtra("PAYMENTPLACE", mPaymentPlace);
+                setResult(RESULT_OK, intent);
                 finish();
             }
         });
@@ -130,6 +146,14 @@ public class CreateBoxActivity extends BaseActivity {
 
 
 
+        load_extraction = findViewById(R.id.load_ext);
+        load_extraction.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(CreateBoxActivity.this, OutcomesActivity.class);
+                startActivityForResult(i, CREATE_BOX_ACTIVITY_OUT);
+            }
+        });
         line_top_info = findViewById(R.id.line_top);
         finish_save = findViewById(R.id.finish_save);
         fab_save = findViewById(R.id.fab_save);
@@ -166,7 +190,9 @@ public class CreateBoxActivity extends BaseActivity {
         finish_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setResult(RESULT_OK);
+                Intent intent = new Intent();
+                intent.putExtra("PAYMENTPLACE", mPaymentPlace);
+                setResult(RESULT_OK, intent);
                 finish();
             }
         });
@@ -397,6 +423,9 @@ public class CreateBoxActivity extends BaseActivity {
     //aca dividir si es escuela o colonia
 
     private void loadAmountByDay(){
+
+        System.out.println("pyment place aaaa");
+        System.out.println(this.mPaymentPlace);
         ApiClient.get().getPaidAmountByDay(mSelectDate, this.mPaymentPlace, this.mCategory,new GenericCallback<ReportBox>() {
             @Override
             public void onSuccess(ReportBox data) {
@@ -446,5 +475,13 @@ public class CreateBoxActivity extends BaseActivity {
     }
 
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == CREATE_BOX_ACTIVITY_OUT ){
+            getPreviousBox();
+        }
+    }
 
 }

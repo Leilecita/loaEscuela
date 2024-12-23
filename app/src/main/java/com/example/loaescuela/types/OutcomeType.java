@@ -5,6 +5,7 @@ public enum OutcomeType {
         ALL(Constants.TYPE_ALL),
         SUELDO(Constants.OUTCOME_SALARY),
         EXTRACCION(Constants.OUTCOME_EXTRACTION),
+        DEPOSITO(Constants.OUTCOME_DEPOSIT),
         SANTI(Constants.OUTCOME_SANTI);
 
         private final String name;

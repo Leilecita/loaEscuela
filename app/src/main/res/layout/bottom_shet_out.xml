@@ -47,7 +47,9 @@
                     android:layout_width="40dp"
                     android:layout_gravity="center"
                     android:id="@+id/im_all"
+                    android:backgroundTint="@color/colorPrimaryDarkLetter"
                     android:layout_height="40dp"
+                    android:background="@drawable/buttonbshadow"
                     android:alpha="0.8"
                     />
 

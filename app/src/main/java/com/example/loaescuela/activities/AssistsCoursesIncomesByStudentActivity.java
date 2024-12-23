@@ -449,6 +449,7 @@ public class AssistsCoursesIncomesByStudentActivity extends BaseActivity impleme
         final Spinner spinnerType=  dialogView.findViewById(R.id.spinner_cat);
         final Spinner spinnerSubCat=  dialogView.findViewById(R.id.spinner_sub_cat);
         final Spinner spinnerPayment=  dialogView.findViewById(R.id.spinner_payment);
+        final Spinner spinnerPaymentPlace =  dialogView.findViewById(R.id.spinner_payment_place);
 
         final TextView  day = dialogView.findViewById(R.id.num);
         final TextView  month = dialogView.findViewById(R.id.month);
@@ -514,6 +515,14 @@ public class AssistsCoursesIncomesByStudentActivity extends BaseActivity impleme
         enumNameToStringArraySub(SubCategoryType.values(),spinner_sub_cat);
         initialSpinner(spinnerSubCat, spinner_sub_cat);
 
+        //SPINNER payment place
+        List<String> spinner_payment_place = new ArrayList<>();
+        spinner_payment_place.add("escuela");
+        spinner_payment_place.add("negocio");
+
+        initialSpinner(spinnerPaymentPlace, spinner_payment_place);
+
+
         final TextView cancel=  dialogView.findViewById(R.id.cancel);
         final Button ok=  dialogView.findViewById(R.id.ok);
 
@@ -542,6 +551,8 @@ public class AssistsCoursesIncomesByStudentActivity extends BaseActivity impleme
 
                     course.paid_amount = am_pay;
                     course.payment_method = mPaymentMethod;
+
+                    mPaymentplace = String.valueOf(spinnerPaymentPlace.getSelectedItem());
 
                     course.payment_place = mPaymentplace;
 

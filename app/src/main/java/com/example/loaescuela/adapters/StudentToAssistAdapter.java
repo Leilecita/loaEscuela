@@ -165,6 +165,9 @@ public class StudentToAssistAdapter extends BaseAdapter<Student,StudentToAssistA
 
         final Student current = getItem(position);
 
+        System.out.println("acaaa assist");
+        System.out.println(paymentPlace);
+
         holder.text_name.setText(current.nombre + " " + current.apellido);
        // holder.category.setText(current.category);
         holder.dni.setText(current.dni);

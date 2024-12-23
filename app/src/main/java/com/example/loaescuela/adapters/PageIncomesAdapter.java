@@ -27,9 +27,9 @@ public class PageIncomesAdapter extends FragmentPagerAdapter {
         mFragments = new ArrayList<>();
 
         mFragments.add(new IncomesBeachFragment());
-        //mFragments.add(new IncomesLocalFragment());
+        mFragments.add(new IncomesLocalFragment());
         mFragments.add(new BoxBeachFragment());
-        //mFragments.add(new BoxLocalFragment());
+        mFragments.add(new BoxLocalFragment());
 
     }
 
@@ -46,7 +46,7 @@ public class PageIncomesAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return 2;
+        return 4;
     }
 
     @Override
@@ -54,10 +54,10 @@ public class PageIncomesAdapter extends FragmentPagerAdapter {
 
         if(position ==0){
             return "ESCUELA";
-       // }else if(position == 1){
-        //    return "NEGOCIO";
-       // }else if(position == 2){
-         //   return "Caja esc";
+        }else if(position == 1){
+            return "NEGOCIO";
+        }else if(position == 2){
+            return "Caja esc";
         }else{
             return "Caja esc";
         }

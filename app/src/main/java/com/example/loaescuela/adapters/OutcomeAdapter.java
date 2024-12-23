@@ -60,10 +60,8 @@ public class OutcomeAdapter extends BaseAdapter<ReportOutcome, OutcomeAdapter.Vi
     @Override
     public long getHeaderId(int position) {
         if (position >= getItemCount()) {
-            return -1;
+            return RecyclerView.NO_POSITION;
         } else {
-
-
             if(groupBy.equals("day")){
                 Date date = DateHelper.get().parseDate(DateHelper.get().onlyDateComplete(getItem(position).created));
                 return date.getTime();

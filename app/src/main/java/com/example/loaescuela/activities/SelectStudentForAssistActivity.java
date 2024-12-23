@@ -109,6 +109,8 @@ public class SelectStudentForAssistActivity extends BaseActivity implements Pagi
         fragmentCategory = getIntent().getStringExtra("FRAGMENTCATEGORY");
         paymentPlace = getIntent().getStringExtra("PAYMENTPLACE");
 
+        System.out.println("acaaa");
+        System.out.println(paymentPlace);
 
         mRecyclerView = findViewById(R.id.list_users);
         layoutManager = new LinearLayoutManager(this    );

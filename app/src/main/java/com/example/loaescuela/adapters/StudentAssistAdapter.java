@@ -711,6 +711,7 @@ public class StudentAssistAdapter extends BaseAdapter<ReportStudentAsistItem,Stu
 
                 @Override
                 public void onError(Error error) {
+                    Toast.makeText(mContext, error.message,Toast.LENGTH_LONG).show();
 
                 }
             });
