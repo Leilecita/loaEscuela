@@ -205,12 +205,12 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                     Intent i = new Intent(getBaseContext(), GeneralAssistActivity.class);
                     i.putExtra("NAMEFRAGMENT", "mini");
                     startActivity(i);
-                }else if(name.equals("sole") || name.equals("tomi")){
+                }else if(name.equals("sole") ){
                     Intent i = new Intent(getBaseContext(), GeneralAssistActivity.class);
                     i.putExtra("NAMEFRAGMENT", "high");
                     startActivity(i);
 
-                }else if(name.equals("gucho") || name.equals("maru")){
+                }else if(name.equals("gucho") || name.equals("flor")){
                     Intent i = new Intent(getBaseContext(), GeneralAssistActivity.class);
                     i.putExtra("NAMEFRAGMENT", "kids");
                     startActivity(i);
